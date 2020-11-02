@@ -1,11 +1,3 @@
---[[
-    GD50
-    Pokemon
-
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
-]]
-
 BattleSprite = Class{}
 
 function BattleSprite:init(texture, x, y)
@@ -35,7 +27,7 @@ function BattleSprite:update(dt)
 end
 
 function BattleSprite:render()
-    love.graphics.setColor(255, 255, 255, self.opacity)
+    love.graphics.setColor(rgba(255, 255, 255, self.opacity))
 
     -- if blinking is set to true, we'll send 1 to the white shader, which will
     -- convert every pixel of the sprite to pure white
