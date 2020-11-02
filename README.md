@@ -133,7 +133,7 @@ end
 -   Tranditional Way: Nine Patch
 
 
-<img src="img/9-patch.png" width="700">
+<img src="img/9-patch.jpg" width="700">
 *Simple Representation of the Idea*
 
 
