@@ -93,3 +93,4 @@ gSounds = {
     ['victory-music'] = love.audio.newSource('sounds/victory.wav', 'static'),
     ['intro-music'] = love.audio.newSource('sounds/intro.mp3', 'static')
 }
+love.audio.setVolume(0.3)

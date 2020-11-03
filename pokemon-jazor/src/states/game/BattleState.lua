@@ -1,11 +1,3 @@
---[[
-    GD50
-    Pokemon
-
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
-]]
-
 BattleState = Class{__includes = BaseState}
 
 function BattleState:init(player)

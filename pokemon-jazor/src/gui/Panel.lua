@@ -1,11 +1,3 @@
---[[
-    GD50
-    Pokemon
-
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
-]]
-
 Panel = Class{}
 
 function Panel:init(x, y, width, height)

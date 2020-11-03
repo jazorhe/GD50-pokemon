@@ -1,16 +1,8 @@
---[[
-    GD50
-    Pokemon
-
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
-]]
-
 BattleMenuState = Class{__includes = BaseState}
 
 function BattleMenuState:init(battleState)
     self.battleState = battleState
-    
+
     self.battleMenu = Menu {
         x = VIRTUAL_WIDTH - 64,
         y = VIRTUAL_HEIGHT - 64,
@@ -28,7 +20,7 @@ function BattleMenuState:init(battleState)
                 text = 'Run',
                 onSelect = function()
                     gSounds['run']:play()
-                    
+
                     -- pop battle menu
                     gStateStack:pop()
 
@@ -40,7 +32,7 @@ function BattleMenuState:init(battleState)
                         gStateStack:push(FadeInState({
                             r = 255, g = 255, b = 255
                         }, 1,
-                        
+
                         -- pop message and battle state and add a fade to blend in the field
                         function()
 

@@ -1,11 +1,3 @@
---[[
-    GD50
-    Pokemon
-
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
-]]
-
 FadeOutState = Class{__includes = BaseState}
 
 function FadeOutState:init(color, time, onFadeComplete)

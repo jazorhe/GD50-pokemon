@@ -122,7 +122,7 @@ end
 
 
 ### Turn-Based System
-
+<!-- TODO -->
 
 ### GUIs
 -   Short for "graphical user interface"
@@ -411,6 +411,49 @@ Shifting as much of it to data as you possibly can should be your end goal, incl
 
 ### Other Notes
 #### Shaders
+Effectively making the sprite completely white or not changing it.
+
+```lua
+function BattleSprite:init(texture, x, y)
+    self.texture = texture
+    self.x = x
+    self.y = y
+    self.opacity = 255
+    self.blinking = false
+
+    -- https://love2d.org/forums/viewtopic.php?t=79617
+    -- white shader that will turn a sprite completely white when used; allows us
+    -- to brightly blink the sprite when it's acting
+    self.whiteShader = love.graphics.newShader[[
+        extern float WhiteFactor;
+
+        vec4 effect(vec4 vcolor, Image tex, vec2 texcoord, vec2 pixcoord)
+        {
+            vec4 outputcolor = Texel(tex, texcoord) * vcolor;
+            outputcolor.rgb += vec3(WhiteFactor);
+            return outputcolor;
+        }
+    ]]
+end
+
+function BattleSprite:update(dt)
+
+end
+
+function BattleSprite:render()
+    love.graphics.setColor(rgba(255, 255, 255, self.opacity))
+
+    -- if blinking is set to true, we'll send 1 to the white shader, which will
+    -- convert every pixel of the sprite to pure white
+    love.graphics.setShader(self.whiteShader)
+    self.whiteShader:send('WhiteFactor', self.blinking and 1 or 0)
+
+    love.graphics.draw(gTextures[self.texture], self.x, self.y)
+
+    -- reset shader
+    love.graphics.setShader()
+end
+```
 
 
 
@@ -431,44 +474,51 @@ Shifting as much of it to data as you possibly can should be your end goal, incl
 
 ## Assignment
 ### Objectives
--   [ ] [**Code Reading**](#code-reading)Read and understand all of **xxxx** source code from Lecture 5.
-    -   [ ] [`main.lua`](#mainlua)
-    -   [ ] [`file.lua`](#filelua)
-    -   [ ] [`file.lua`](#filelua)
-    -   [ ] [`file.lua`](#filelua)
+-   [ ] [**Code Reading**](#code-reading)Read and understand all of **xxxx** source code from Lecture 7.
+    -   [ ] [`main.lua`, `Dependencies.lua` and `constants.lua`](#mainlua)
+    -   [ ] [`pokemon_defs.lua`, `entity_defs.lua`](#filelua)
+    -   [ ] [`StateMachine.lua` and `StateStack.lua`](#filelua)
+    -   [ ] [`StartState.lua` and `PlayState.lua`](#filelua)
+    -   [ ] [`DialogueState.lua`, `MenuState.lua` and `FieldMenuState.lua`](#filelua)
+    -   [ ] [`FadeInState.lua` and `FadeOutState.lua`](#filelua)
+    -   [ ] [`BattleState.lua`, `BattleMenuState.lua` and `BattleMessageState.lua`](#filelua)
+    -   [ ] [`TakeTurnState.lua`](#filelua)
+    -   [ ] [Entity States and Player States](#filelua)
+    -   [ ] [GUIs](#filelua)
+    -   [ ] [`BattleSprite.lua` and `Opponent.lua`](#filelua)
 
--   [ ] [**Task**](#task):
--   [ ] [**Task**](#task):
--   [ ] [**Task**](#task):
+-   [ ] [**Level Up Screen**](#level-up-screen): Implement a `Menu` that appears during the player Pokémon’s level up that shows, for each stat, ‘X + Y = Z’, where X is the starting stat, Y is the amount it’s increased for this level, and Z is the resultant sum. This `Menu` should appear right after the “Level Up” dialogue that appears at the end of a victory where the player has indeed leveled up.
 
 
 <br>
 
 ### Code Reading
-#### `main.lua`
+#### `main.lua`, `Dependencies.lua` and `constants.lua`
+#### `pokemon_defs.lua`, `entity_defs.lua`
+#### `StateMachine.lua` and `StateStack.lua`
+#### `StartState.lua` and `PlayState.lua`
+#### `DialogueState.lua`, `MenuState.lua` and `FieldMenuState.lua`
+#### `FadeInState.lua` and `FadeOutState.lua`
+#### `BattleState.lua`, `BattleMenuState.lua` and `BattleMessageState.lua`
+#### `TakeTurnState.lua`
+#### Entity States and Player States
+#### GUIs
+#### `BattleSprite.lua` and `Opponent.lua`
 
 
-### Task
-*Description*
+### Level Up Screen
+*Implement a `Menu` that appears during the player Pokémon’s level up that shows, for each stat, ‘X + Y = Z’, where X is the starting stat, Y is the amount it’s increased for this level, and Z is the resultant sum. This `Menu` should appear right after the “Level Up” dialogue that appears at the end of a victory where the player has indeed leveled up. The area where most of this will take place is the `TakeTurnState`, specifically in the `:victory()` function, where the actual detection of a level up takes place. Ordinarily, just a BattleMessageState gets pushed onto the `StateStack`, but we’ll need to go a step further and push an additional `Menu` in order to accomplish what we’re after. This `Menu` should not have a cursor like the other `Menu` we’re used to seeing (in the `BattleMenuState`!), so you’ll need to customize the `Selection` class a little bit in order to take a boolean value to turn the cursor on or off as needed (defaulting to true if needed to preserve the behavior of the `Menu` in the Battle`Menu`State). Note that the `:levelUp()` function in the Pokemon class returns all of the stat increases we need in order to display things properly, so be sure to use those returned values when creating the `Menu`! As long as you get a proper grasp on the Selection, `Menu`, and `StateStack` classes, this assignment should be relatively straightforward in comparison to the complexity of this week’s code as a whole!*
+
 
 **The update needs to do the following**: <br>
+-   Push `LevelUpStatsState` which has a `Menu`
+-   The `Menu` does not allow cursor selection
+-   The `Menu` should display all 4 current stats, all 4 increasing values, and all 4 increased values in 'X + Y = Z' form
+
+
 **How I achieved**: <br>
-**Challenge myself**: <br>
 
 
-### Task
-*Description*
-
-**The update needs to do the following**: <br>
-**How I achieved**: <br>
-**Challenge myself**: <br>
-
-
-### Task
-*Description*
-
-**The update needs to do the following**: <br>
-**How I achieved**: <br>
 **Challenge myself**: <br>
 
 
